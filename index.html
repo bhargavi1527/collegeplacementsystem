@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Placement Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>🌿 PlacementHub</h2>
+    <p class="side-label">MENU</p>
+
+    <a class="active" data-page="dashboard" onclick="showPage('dashboard')">⌂ Dashboard</a>
+    <a data-page="students" onclick="showPage('students')">♙ Students</a>
+    <a data-page="companies" onclick="showPage('companies')">▣ Companies</a>
+    <a data-page="jobs" onclick="showPage('jobs')">▤ Job Opportunities</a>
+    <a data-page="placements" onclick="showPage('placements')">✓ Placements</a>
+    <a data-page="reports" onclick="showPage('reports')">▥ Reports</a>
+    <a data-page="notifications" onclick="showPage('notifications')">♧ Notifications</a>
+
+    <div class="side-bottom">
+        <span class="side-label">PLACEMENT ADMIN</span>
+    </div>
+</div>
+
+<div class="main">
+
+    <header>
+        <div>
+            <h2 id="pageTitle">Dashboard</h2>
+            <p>College Placement Management System</p>
+        </div>
+        <div class="admin">● Admin</div>
+    </header>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="page active" data-title="Dashboard">
+        <div class="welcome">
+            <div>
+                <h2>Welcome Back, Admin!</h2>
+                <p>Manage your college placement activities easily.</p>
+            </div>
+            <span>🌿</span>
+        </div>
+
+        <h3>Overview</h3>
+
+        <div class="cards">
+            <div class="card">
+                <p>Total Students</p>
+                <h1 id="studentCount">0</h1>
+                <small>Registered students</small>
+            </div>
+            <div class="card">
+                <p>Total Companies</p>
+                <h1 id="companyCount">0</h1>
+                <small>Registered companies</small>
+            </div>
+            <div class="card">
+                <p>Available Jobs</p>
+                <h1 id="jobCount">0</h1>
+                <small>Active opportunities</small>
+            </div>
+            <div class="card">
+                <p>Students Placed</p>
+                <h1 id="placementCount">0</h1>
+                <small>Selected students</small>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>Placement Overview</h3>
+            <p id="dashboardSummary">Your placement statistics will appear here.</p>
+            <div class="progress">
+                <div id="progressBar"></div>
+            </div>
+            <small id="progressText">0% Placement Rate</small>
+        </div>
+
+        <div class="panel">
+            <h3>Recent Activities</h3>
+            <div id="recentActivities">No recent activities.</div>
+        </div>
+    </section>
+
+    <!-- STUDENTS -->
+    <section id="students" class="page" data-title="Students">
+        <h3>Student Management</h3>
+
+        <form id="studentForm">
+            <input id="studentName" placeholder="Student Name" required>
+            <input id="rollNo" placeholder="Roll Number" required>
+            <input id="department" placeholder="Department" required>
+            <input id="cgpa" type="number" min="0" max="10"
+                   step="0.01" placeholder="CGPA" required>
+            <button type="submit">+ Add Student</button>
+        </form>
+
+        <input class="search" id="studentSearch"
+               placeholder="Search student..." oninput="renderStudents()">
+
+        <div class="table-box">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Roll Number</th>
+                        <th>Department</th>
+                        <th>CGPA</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTable"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- COMPANIES -->
+    <section id="companies" class="page" data-title="Companies">
+        <h3>Company Management</h3>
+
+        <form id="companyForm">
+            <input id="companyName" placeholder="Company Name" required>
+            <input id="companyRole" placeholder="Job Role" required>
+            <input id="package" type="number" min="0.1" step="0.1"
+                   placeholder="Package in LPA" required>
+            <button type="submit">+ Add Company</button>
+        </form>
+
+        <div class="table-box">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Job Role</th>
+                        <th>Package</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="companyTable"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- JOBS -->
+    <section id="jobs" class="page" data-title="Job Opportunities">
+        <h3>Job Opportunities</h3>
+
+        <form id="jobForm">
+            <input id="jobTitle" placeholder="Job Title" required>
+            <input id="jobCompany" placeholder="Company Name" required>
+            <input id="jobPackage" type="number" min="0.1" step="0.1"
+                   placeholder="Package in LPA" required>
+            <button type="submit">+ Post Job</button>
+        </form>
+
+        <div class="job-container" id="jobList"></div>
+
+        <div class="panel application-panel">
+            <h3>Apply for a Job</h3>
+            <form id="applyForm">
+                <input id="applyRoll" placeholder="Student roll number" required>
+                <select id="applyJobId" aria-label="Select a job" required>
+                    <option value="">Select a job</option>
+                </select>
+                <button type="submit">Submit Application</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- PLACEMENTS -->
+    <section id="placements" class="page" data-title="Placements">
+        <h3>Placement Records</h3>
+
+        <div class="table-box">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Roll Number</th>
+                        <th>Company</th>
+                        <th>Job Role</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="placementTable"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- REPORTS -->
+    <section id="reports" class="page" data-title="Reports">
+        <h3>Placement Reports</h3>
+
+        <div class="cards">
+            <div class="card">
+                <p>Total Students</p>
+                <h1 id="reportStudents">0</h1>
+            </div>
+            <div class="card">
+                <p>Companies</p>
+                <h1 id="reportCompanies">0</h1>
+            </div>
+            <div class="card">
+                <p>Students Placed</p>
+                <h1 id="reportPlacements">0</h1>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>Placement Summary</h3>
+            <h2 id="reportPercentage">0%</h2>
+            <p>Overall Placement Percentage</p>
+        </div>
+    </section>
+
+    <!-- NOTIFICATIONS -->
+    <section id="notifications" class="page" data-title="Notifications">
+        <h3>Notifications</h3>
+
+        <div class="panel">
+            <h4>🌿 Welcome</h4>
+            <p>Welcome to the College Placement Portal.</p>
+        </div>
+
+        <div class="panel">
+            <h4>💼 Job Opportunities</h4>
+            <p>Explore the latest job opportunities and apply.</p>
+        </div>
+
+        <div class="panel">
+            <h4>📢 Placement Updates</h4>
+            <p>Check placement records for student selection updates.</p>
+        </div>
+    </section>
+
+    <footer>© 2026 College Placement Management System</footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+
